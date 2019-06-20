@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * ORM: Object Relationship Mapping
+ * 
+ * 
  * 测试使用Map来封装一条记录
  * 	List<Map> 封装多条记录
  * 

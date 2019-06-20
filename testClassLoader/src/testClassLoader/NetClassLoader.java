@@ -5,21 +5,22 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 /**
- * 自定义文件系统类加载器
+ * net类加载器
  * 
  * @author yinyiliang
  *
  */
-public class FileSystemClassLoader extends ClassLoader {
+public class NetClassLoader extends ClassLoader {
 
-	//传一个User类名   --> 在目录下找相关文件  D:/informatique/EclipseWorkspace/testClassLoader/testClassLoader/User.class
+	//传一个User类名   --> www.sxt.cn/myjava  com/bjsxt/test/User.class
 	//找到后通过IO流加载到内存里
-	private String rootDir;
+	private String rootUrl;
 	
-	public FileSystemClassLoader(String rootDir) {
-		this.rootDir = rootDir;
+	public NetClassLoader(String rootDir) {
+		this.rootUrl = rootDir;
 	}
 	
 	@Override
@@ -53,15 +54,17 @@ public class FileSystemClassLoader extends ClassLoader {
 	}
 	
 	private byte[] getClassData(String classname) {//一个User类名  com.bjsxt.test.User 
-// --> 在目录下找相关文件 com/bjsxt/test/User.class   D:/informatique/EclipseWorkspace/testClassLoader/testClassLoader/User.class
-		String path = rootDir + "/" + classname.replace('.','/')+".class";
+// --> 在URL下找相关文件 com/bjsxt/test/User.class 
+		String path = rootUrl + "/" + classname.replace('.','/')+".class";
 		
 		//流中的数据转成字节数组，可以使用IOUtils
 		InputStream is = null;
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		
 		try {
-			is = new FileInputStream(path);
+			URL url = new URL(path);
+			
+			is = url.openStream();
 			
 			byte[] buffer = new byte[1024];
 			int temp = 0;

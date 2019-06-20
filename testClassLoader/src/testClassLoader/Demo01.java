@@ -1,5 +1,14 @@
 package testClassLoader;
 
+/**
+ * Self-defined ClassLoader->App->External ClassLoader->bootstrap(引导) ClassLoader
+ * 
+ * Parent classLoader will be used in priority 双亲委托机制
+ * 
+ * @author y.yin
+ *
+ */
+
 public class Demo01 {
 	
 	static {

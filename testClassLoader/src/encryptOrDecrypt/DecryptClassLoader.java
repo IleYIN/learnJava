@@ -1,24 +1,19 @@
-package testClassLoader;
+package encryptOrDecrypt;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-
 /**
- * 自定义文件系统类加载器
+ * load the encrypted class 字节码 byte code
  * 
- * @author yinyiliang
+ * @author y.yin
  *
  */
-public class FileSystemClassLoader extends ClassLoader {
-
-	//传一个User类名   --> 在目录下找相关文件  D:/informatique/EclipseWorkspace/testClassLoader/testClassLoader/User.class
-	//找到后通过IO流加载到内存里
+public class DecryptClassLoader extends ClassLoader{
 	private String rootDir;
 	
-	public FileSystemClassLoader(String rootDir) {
+	public DecryptClassLoader(String rootDir) {
 		this.rootDir = rootDir;
 	}
 	
@@ -63,10 +58,12 @@ public class FileSystemClassLoader extends ClassLoader {
 		try {
 			is = new FileInputStream(path);
 			
-			byte[] buffer = new byte[1024];
-			int temp = 0;
-			while ((temp = is.read(buffer)) != -1) {
-				baos.write(buffer,0,temp);
+			/**
+			 * decryption
+			 */
+			int temp = -1;
+			while((temp=is.read()) != -1) {
+				baos.write(temp^0xff);//invert
 			}
 			
 			return baos.toByteArray();
