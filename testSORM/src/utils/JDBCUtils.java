@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-public class JDBCUtil {
+public class JDBCUtils {
 	
 	static Properties pros = null; //可以帮助读取和处理资源文件中的信息
 

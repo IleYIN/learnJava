@@ -8,6 +8,20 @@ import java.util.List;
  * @author yinyiliang
  *
  */
+
+/**
+ * 
+DML（data manipulation language）：
+       它们是SELECT、UPDATE、INSERT、DELETE，就象它的名字一样，这4条命令是用来对数据库里的数据进行操作的语言
+DDL（data definition language）：
+       DDL比DML要多，主要的命令有CREATE、ALTER、DROP等，DDL主要是用在定义或改变表（TABLE）的结构，数据类型，表之间的链接和约束等初始化工作上，他们大多在建立表时使用
+DCL（Data Control Language）：
+       是数据库控制功能。是用来设置或更改数据库用户或角色权限的语句，包括（grant,deny,revoke等）语句。在默认状态下，只有sysadmin,dbcreator,db_owner或db_securityadmin等人员才有权力执行DCL
+ * @author yinyiliang
+ *
+ */
+
+
 @SuppressWarnings("all")
 public interface Query {
 
@@ -64,7 +78,7 @@ public interface Query {
 	/**
 	 * 查询返回一行记录，并将该记录封装到clazz指定的类的对象中
 	 * @param sql 查询语句
-	 * @param clazz 封装数据的javabean的Class对象
+	 * @param clazz 封装数据的javabean类的Class对象
 	 * @param params sql的参数
 	 * @return 查询到的结果
 	 */
