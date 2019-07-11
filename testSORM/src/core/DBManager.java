@@ -3,7 +3,9 @@ package core;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 import bean.Configuration;
@@ -15,7 +17,7 @@ import bean.Configuration;
  */
 public class DBManager {
 
-	private static Configuration conf;
+	private static Configuration conf;//全局
 	
 	static { //静态代码块只在类加载时执行一次
 		Properties pros = new Properties();
@@ -47,5 +49,68 @@ public class DBManager {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	/**
+	 * 
+	 * @return 获得configuration对象
+	 */
+	public static Configuration getConf() {
+		return conf;
+	}
+	
+	
+	public static void close(ResultSet rs, Statement ps, Connection conn) {
+		
+		try {
+			if(rs!=null) {
+				rs.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			if (ps!=null) {
+				ps.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			if (conn!=null) {
+				conn.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void close(Statement ps, Connection conn) {
+		
+		try {
+			if (ps!=null) {
+				ps.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		try {
+			if (conn!=null) {
+				conn.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void close(Connection conn) {
+		
+		try {
+			if (conn!=null) {
+				conn.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

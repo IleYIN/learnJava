@@ -2,10 +2,12 @@ package core;
 /**
  * sql数据类型和java数据类型的转换
  * 
+ * https://blog.csdn.net/Fisher_yu01/article/details/83474321
+ * 
  * @author yinyiliang
  *
  */
-public class SqlTypeConvertor implements TypeConvertor  {
+public class PostgresqlTypeConvertor implements TypeConvertor  {
 
 	@Override
 	public String databaseType2JavaType(String columnType) {

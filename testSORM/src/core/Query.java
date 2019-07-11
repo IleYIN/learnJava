@@ -37,6 +37,7 @@ public interface Query {
 	
 	/**
 	 * 将一个对象存储到数据库中
+	 * 对象中属性部位null的属性存储，数字是null的设为0
 	 * @param obj
 	 */
 	public void insert(Object obj);
@@ -47,7 +48,7 @@ public interface Query {
 	 * @param clazz 根据表对应的类的Class对象
 	 * @param id 主键的值
 	 */
-	public void delete(Class clazz, int id);//delete from User where id=2;
+	public void delete(Class clazz, Object id);//delete from User where id=2;
 	
 	
 	/**

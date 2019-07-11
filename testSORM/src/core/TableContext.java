@@ -10,6 +10,8 @@ import java.util.Map;
 
 import bean.ColumnInfo;
 import bean.TableInfo;
+import utils.JavaFileUtils;
+import utils.StringUtils;
 
 /**
  * 负责获取管理数据库所有表结构和类结构的关系，并可以根据表结构生成类结构
@@ -43,7 +45,7 @@ public class TableContext {
 			while(tableRet.next()) {
 				
 				String tableName = (String) tableRet.getObject("TABLE_NAME");
-				System.out.println(tableName);
+//				System.out.println(tableName);
 				
 				TableInfo ti = new TableInfo(tableName, new ArrayList<ColumnInfo>(), new HashMap<String,ColumnInfo>());
 				tables.put(tableName, ti);
@@ -72,6 +74,11 @@ public class TableContext {
 			e.printStackTrace();
 		}
 
+		//更新类结构
+		updateJavaPOFile();
+		
+		//加载po包下面所有的类，放入Map中，便于重用，提高效率
+		loadPOTables();
 	}
 	
 //	public static Map<String,TableInfo> getTableInfos(){
@@ -79,9 +86,42 @@ public class TableContext {
 //	}
 	
 	
+	/**
+	 * 根据表结构，更新配置的po包下面的java类
+	 * 实现了从表结构转化到类结构
+	 */
+	public static void updateJavaPOFile() {
+		Map<String, TableInfo> map = TableContext.tables;
+		for(TableInfo t:map.values()) {
+			JavaFileUtils.createJavaPOFile(t, new PostgresqlTypeConvertor());
+		}
+	}
+	
+	/**
+	 * 加载po包下面的类 全放到Map里
+	 */
+	public static void loadPOTables() {
+		
+		for(TableInfo tableInfo:tables.values()) {
+		
+			try {
+				//persistentObject.Emp
+				Class c = Class.forName(DBManager.getConf().getPoPackage()+"."
+						+StringUtils.firstChar2UpperCase(tableInfo.getTname()));
+				poClassTableMap.put(c, tableInfo);
+				poClassTableMap.put(c, tableInfo);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/*
 	public static void main(String[] args) {
 //		Map<String,TableInfo> tables = getTableInfos();
 		Map<String,TableInfo> tables = TableContext.tables;
-		System.out.println(tables);
+//		System.out.println(tables);
+		updateJavaPOFile();
  	}
+ 	*/
 }
