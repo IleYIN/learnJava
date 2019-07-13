@@ -98,7 +98,7 @@ public class PostgresqlQuery implements Query {
 		} finally {
 			DBManager.close(ps, conn);
 		}
-		return 0;
+		return count;
 	}
 
 	@Override
