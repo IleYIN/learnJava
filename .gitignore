@@ -13,3 +13,9 @@
 .externalNativeBuild
 .metadata
 /.recommenders/
+
+target
+.classpath
+.project
+.settings
+*.log
